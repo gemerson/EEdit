@@ -43,106 +43,20 @@ namespace EEdit
 
         private void VariableList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadValues();
+            if (this.VarList.SelectedItems.Count > 0)
+            {
+                EnvVariable value;
+                if (environment.Variables.TryGetValue(VarList.SelectedItems[0].Text, out value))
+                {
+                    this.valueEditor1.EnvironmentVariable = value;
+                }
+            }
         }
 
         private void List_SizeChanged(object sender, EventArgs e)
         {
             ListView list = (ListView)sender;
             list.Columns[0].Width = list.Width - 22; // 22 = slightly wider than the vertical scroll bar that appears
-        }
-
-        private void EntryList_AfterLabelEdit(object sender, LabelEditEventArgs e)
-        {
-            // handle the update manually.  The list will refresh when value changes.
-            e.CancelEdit = true;
-            EntryList.LabelEdit = false;
-
-            if (e.Label == null || string.IsNullOrWhiteSpace(e.Label)) return;
-
-            EnvVariable value = environment.Variables[VarList.SelectedItems[0].Text];
-
-            if (e.Item == value.EntryCount)
-                value.AddEntry(e.Label);
-            else
-                value.UpdateEntry(e.Item, e.Label);
-        }
-
-        private void CopyValueButton_Click(object sender, EventArgs e)
-        {
-            ValueDisplay.Focus();
-            ValueDisplay.SelectAll();
-            Clipboard.SetText(ValueDisplay.Text);
-        }
-
-        private void EntryList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateButtonState();
-        }
-
-        private void TopButton_Click(object sender, EventArgs e)
-        {
-            if (EntryList.SelectedIndices.Count == 0)
-                return;
-
-            ListViewItem item = EntryList.SelectedItems[0];
-            EnvVariable value = ((EnvVariable)item.Tag);
-            value.MoveEntry(item.Index, 0);
-        }
-
-        private void UpButton_Click(object sender, EventArgs e)
-        {
-            if (EntryList.SelectedIndices.Count == 0)
-                return;
-
-            ListViewItem item = EntryList.SelectedItems[0];
-
-            if (item.Index > 0)
-            {
-                EnvVariable value = ((EnvVariable)item.Tag);
-                value.MoveEntry(item.Index, item.Index - 1);
-            }
-        }
-
-        private void DownButton_Click(object sender, EventArgs e)
-        {
-            if (EntryList.SelectedIndices.Count == 0)
-                return;
-
-            ListViewItem item = EntryList.SelectedItems[0];
-
-            if (item.Index < EntryList.Items.Count - 1)
-            {
-                EnvVariable value = ((EnvVariable)item.Tag);
-                value.MoveEntry(item.Index, item.Index + 1);
-            }
-        }
-
-        private void BottomButton_Click(object sender, EventArgs e)
-        {
-            if (EntryList.SelectedIndices.Count == 0)
-                return;
-
-            ListViewItem item = EntryList.SelectedItems[0];
-            EnvVariable value = ((EnvVariable)item.Tag);
-            value.MoveEntry(item.Index, EntryList.Items.Count - 2);
-        }
-
-        private void EntryList_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (EntryList.SelectedIndices.Count == 0) return;
-            
-            switch (e.KeyCode)
-            {
-                case Keys.Delete:
-                    RemoveSelectedEntry();
-                    break;
-
-                case Keys.Enter:
-                    ListViewItem item = EntryList.SelectedItems[0];
-                    item.BeginEdit();
-                    break;
-            }
         }
 
         private void VarList_KeyDown(object sender, KeyEventArgs e)
@@ -174,22 +88,12 @@ namespace EEdit
             }
 
             EnvVariable value = environment.AddVariable(e.Label);
-            value.CollectionChanged += new NotifyCollectionChangedEventHandler(Entries_CollectionChanged);
 
             ListViewItem item = VarList.Items[e.Item];
             item.Text = value.Variable;
 
             VarList.Sort();
             item.EnsureVisible();
-
-            LoadValues();
-
-            AddEntry();
-        }
-
-        private void RemoveEntryButton_Click(object sender, EventArgs e)
-        {
-            RemoveSelectedEntry();
         }
 
         private void RemoveVarButton_Click(object sender, EventArgs e)
@@ -241,32 +145,6 @@ namespace EEdit
             VarList.LabelEdit = true;
             item.BeginEdit();
         }
-
-        private void AddEntryButton_Click(object sender, EventArgs e)
-        {
-            AddEntry();
-        }
-
-        private void ValueDisplay_MouseDown(object sender, MouseEventArgs e)
-        {
-            this.SelectEnvironmentVariableInValueDisplay();
-        }
-
-        private void ValueDisplay_KeyDown(object sender, KeyEventArgs e)
-        {
-            this.SelectEnvironmentVariableInValueDisplay();
-        }
-
-        private void AddEntry()
-        {
-            ListViewItem item = new ListViewItem();
-            EntryList.Items.Add(item);
-            item.EnsureVisible();
-
-            EntryList.LabelEdit = true;
-            item.BeginEdit();
-        }
-
         #endregion
 
         private void RemoveDeletedVariables()
@@ -286,25 +164,6 @@ namespace EEdit
             {
                 string filepath = dlg.FileName;
                 environment.Export(filepath);
-            }
-        }
-
-        public void RemoveSelectedEntry()
-        {
-            ListViewItem item = EntryList.SelectedItems[0];
-            EnvVariable value = (EnvVariable)item.Tag;
-
-            int index = item.Index;
-            value.RemoveEntry(index);
-            item.Remove();
-
-            if (index < EntryList.Items.Count)
-            {
-                EntryList.Items[index].Selected = true;
-            }
-            else if (EntryList.Items.Count > 0)
-            {
-                EntryList.Items[index - 1].Selected = true;
             }
         }
 
@@ -335,7 +194,6 @@ namespace EEdit
             foreach (string variable in environment.Variables.Keys)
             {
                 VarList.Items.Add(variable);
-                environment.Variables[variable].CollectionChanged += new NotifyCollectionChangedEventHandler(Entries_CollectionChanged);
             }
 
             SelectVariable(DefaultVariable);
@@ -369,15 +227,7 @@ namespace EEdit
             RestoreVarButton.Enabled = value.Deleted;
             RemoveVarButton.Enabled = !value.Deleted;
 
-            AddEntryButton.Enabled = (VarList.SelectedIndices.Count > 0);
-
-            bool selection = (EntryList.SelectedIndices.Count > 0);
-
-            TopButton.Enabled = selection && EntryList.SelectedIndices[0] > 0;
-            UpButton.Enabled = selection && EntryList.SelectedIndices[0] > 0;
-            DownButton.Enabled = selection && EntryList.SelectedIndices[0] < EntryList.Items.Count - 1;
-            BottomButton.Enabled = selection && EntryList.SelectedIndices[0] < EntryList.Items.Count - 1;
-            RemoveEntryButton.Enabled = selection;
+            this.valueEditor1.UpdateButtonState();
         }
 
         private void UpdateVarStateIndicators()
@@ -395,77 +245,6 @@ namespace EEdit
                    (value.Added) ? Color.LightGreen :
                    (value.Edited) ? Color.LightBlue :
                    Color.White;
-        }
-
-        private void LoadValues()
-        {
-            EntryList.Items.Clear();
-            if (VarList.SelectedIndices.Count == 0)
-                return;
-
-            EnvVariable value;
-            if (!environment.Variables.TryGetValue(VarList.SelectedItems[0].Text, out value)) return;
-
-            ValueDisplay.Text = value.FullValue;
-            foreach (string entry in value.GetEntries())
-            {
-                ListViewItem item = new ListViewItem(entry);
-                item.Tag = value;
-                EntryList.Items.Add(item);
-            }
-
-            UpdateVarStateIndicators();
-            UpdateButtonState();
-        }
-
-        void Entries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            LoadValues();
-
-            if (e.NewStartingIndex >= 0)
-            {
-                EntryList.Items[e.NewStartingIndex].Selected = true;
-            }
-        }
-
-        private void SelectEnvironmentVariableInValueDisplay()
-        {
-            string environmentVariable = this.GetEnvironmentVariableFromString(this.ValueDisplay.Text, this.ValueDisplay.SelectionStart);
-
-            ListViewItem item = this.EntryList.FindItemWithText(environmentVariable);
-
-            if (item != null)
-            {
-                item.Selected = true;
-                this.EntryList.EnsureVisible(item.Index);
-            }
-        }
-
-        private string GetEnvironmentVariableFromString(string variables, int indexInString)
-        {
-            string variable = string.Empty;
-
-            if (variables.Substring(0, indexInString).IndexOf(';') > -1)
-            {
-                int beginningOfVariable = variables.Substring(0, indexInString).LastIndexOf(';');
-                int endOfVariable = variables.Substring(beginningOfVariable + 1).IndexOf(';');
-
-                if (endOfVariable > -1)
-                {
-                    variable = variables.Substring(beginningOfVariable + 1, endOfVariable);
-                }
-                else
-                {
-                    variable = variables.Substring(beginningOfVariable + 1);
-                }
-            }
-            else
-            {
-                // looks like it's the first variable
-                variable = variables.Substring(0, variables.IndexOf(';'));
-            }
-
-            return variable;
         }
     }
 }

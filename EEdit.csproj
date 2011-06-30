@@ -95,6 +95,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ValueEditor.Designer.cs">
+      <DependentUpon>ValueEditor.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="EEdit.resx">
       <DependentUpon>EEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,6 +117,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ValueEditor.resx">
+      <DependentUpon>ValueEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Icons\Top.ico" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

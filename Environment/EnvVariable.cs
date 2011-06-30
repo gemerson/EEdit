@@ -143,7 +143,10 @@ namespace EEdit.Environment
 
         private void Entries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            CollectionChanged(sender, e);
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(sender, e);
+            }
         }
     }
 }

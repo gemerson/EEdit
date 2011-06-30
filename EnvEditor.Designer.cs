@@ -37,20 +37,11 @@
             this.RemoveVarButton = new System.Windows.Forms.Button();
             this.VarList = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.AddEntryButton = new System.Windows.Forms.Button();
-            this.RemoveEntryButton = new System.Windows.Forms.Button();
-            this.BottomButton = new System.Windows.Forms.Button();
-            this.DownButton = new System.Windows.Forms.Button();
-            this.UpButton = new System.Windows.Forms.Button();
-            this.TopButton = new System.Windows.Forms.Button();
-            this.CopyValueButton = new System.Windows.Forms.Button();
-            this.ValueDisplay = new System.Windows.Forms.TextBox();
-            this.EntryList = new System.Windows.Forms.ListView();
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ExportButton = new System.Windows.Forms.Button();
-            this.ResetButton = new System.Windows.Forms.Button();
+            this.valueEditor1 = new EEdit.ValueEditor();
             this.imageList16 = new System.Windows.Forms.ImageList(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.ResetButton = new System.Windows.Forms.Button();
+            this.ExportButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -75,15 +66,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.AddEntryButton);
-            this.splitContainer1.Panel2.Controls.Add(this.RemoveEntryButton);
-            this.splitContainer1.Panel2.Controls.Add(this.BottomButton);
-            this.splitContainer1.Panel2.Controls.Add(this.DownButton);
-            this.splitContainer1.Panel2.Controls.Add(this.UpButton);
-            this.splitContainer1.Panel2.Controls.Add(this.TopButton);
-            this.splitContainer1.Panel2.Controls.Add(this.CopyValueButton);
-            this.splitContainer1.Panel2.Controls.Add(this.ValueDisplay);
-            this.splitContainer1.Panel2.Controls.Add(this.EntryList);
+            this.splitContainer1.Panel2.Controls.Add(this.valueEditor1);
             this.splitContainer1.Size = new System.Drawing.Size(722, 413);
             this.splitContainer1.SplitterDistance = 238;
             this.splitContainer1.TabIndex = 3;
@@ -93,10 +76,10 @@
             // 
             this.NewVarButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.NewVarButton.ImageKey = "Add.ico";
-            this.NewVarButton.ImageList = this.imageList32;
-            this.NewVarButton.Location = new System.Drawing.Point(0, 374);
+            this.NewVarButton.ImageList = this.imageList16;
+            this.NewVarButton.Location = new System.Drawing.Point(3, 386);
             this.NewVarButton.Name = "NewVarButton";
-            this.NewVarButton.Size = new System.Drawing.Size(38, 36);
+            this.NewVarButton.Size = new System.Drawing.Size(24, 24);
             this.NewVarButton.TabIndex = 7;
             this.toolTip1.SetToolTip(this.NewVarButton, "Add");
             this.NewVarButton.UseVisualStyleBackColor = true;
@@ -122,10 +105,10 @@
             this.RestoreVarButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RestoreVarButton.Enabled = false;
             this.RestoreVarButton.ImageKey = "Restore.ico";
-            this.RestoreVarButton.ImageList = this.imageList32;
-            this.RestoreVarButton.Location = new System.Drawing.Point(88, 374);
+            this.RestoreVarButton.ImageList = this.imageList16;
+            this.RestoreVarButton.Location = new System.Drawing.Point(63, 386);
             this.RestoreVarButton.Name = "RestoreVarButton";
-            this.RestoreVarButton.Size = new System.Drawing.Size(38, 36);
+            this.RestoreVarButton.Size = new System.Drawing.Size(24, 24);
             this.RestoreVarButton.TabIndex = 6;
             this.toolTip1.SetToolTip(this.RestoreVarButton, "Restore");
             this.RestoreVarButton.UseVisualStyleBackColor = true;
@@ -136,10 +119,10 @@
             this.RemoveVarButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RemoveVarButton.Enabled = false;
             this.RemoveVarButton.ImageKey = "RedX.ico";
-            this.RemoveVarButton.ImageList = this.imageList32;
-            this.RemoveVarButton.Location = new System.Drawing.Point(44, 374);
+            this.RemoveVarButton.ImageList = this.imageList16;
+            this.RemoveVarButton.Location = new System.Drawing.Point(33, 386);
             this.RemoveVarButton.Name = "RemoveVarButton";
-            this.RemoveVarButton.Size = new System.Drawing.Size(38, 36);
+            this.RemoveVarButton.Size = new System.Drawing.Size(24, 24);
             this.RemoveVarButton.TabIndex = 5;
             this.toolTip1.SetToolTip(this.RemoveVarButton, "Delete");
             this.RemoveVarButton.UseVisualStyleBackColor = true;
@@ -159,7 +142,7 @@
             this.VarList.Location = new System.Drawing.Point(0, 3);
             this.VarList.MultiSelect = false;
             this.VarList.Name = "VarList";
-            this.VarList.Size = new System.Drawing.Size(238, 365);
+            this.VarList.Size = new System.Drawing.Size(238, 377);
             this.VarList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.VarList.TabIndex = 0;
             this.VarList.UseCompatibleStateImageBehavior = false;
@@ -173,164 +156,14 @@
             // 
             this.columnHeader1.Width = 147;
             // 
-            // AddEntryButton
+            // valueEditor1
             // 
-            this.AddEntryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddEntryButton.Enabled = false;
-            this.AddEntryButton.ImageKey = "Add.ico";
-            this.AddEntryButton.ImageList = this.imageList32;
-            this.AddEntryButton.Location = new System.Drawing.Point(439, 281);
-            this.AddEntryButton.Name = "AddEntryButton";
-            this.AddEntryButton.Size = new System.Drawing.Size(38, 35);
-            this.AddEntryButton.TabIndex = 9;
-            this.toolTip1.SetToolTip(this.AddEntryButton, "Add");
-            this.AddEntryButton.UseVisualStyleBackColor = true;
-            this.AddEntryButton.Click += new System.EventHandler(this.AddEntryButton_Click);
-            // 
-            // RemoveEntryButton
-            // 
-            this.RemoveEntryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RemoveEntryButton.Enabled = false;
-            this.RemoveEntryButton.Image = global::EEdit.Properties.Resources.RedX;
-            this.RemoveEntryButton.Location = new System.Drawing.Point(439, 322);
-            this.RemoveEntryButton.Name = "RemoveEntryButton";
-            this.RemoveEntryButton.Size = new System.Drawing.Size(38, 35);
-            this.RemoveEntryButton.TabIndex = 8;
-            this.toolTip1.SetToolTip(this.RemoveEntryButton, "Delete");
-            this.RemoveEntryButton.UseVisualStyleBackColor = true;
-            this.RemoveEntryButton.Click += new System.EventHandler(this.RemoveEntryButton_Click);
-            // 
-            // BottomButton
-            // 
-            this.BottomButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BottomButton.Enabled = false;
-            this.BottomButton.ImageIndex = 0;
-            this.BottomButton.ImageList = this.imageList32;
-            this.BottomButton.Location = new System.Drawing.Point(439, 206);
-            this.BottomButton.Name = "BottomButton";
-            this.BottomButton.Size = new System.Drawing.Size(38, 38);
-            this.BottomButton.TabIndex = 7;
-            this.toolTip1.SetToolTip(this.BottomButton, "Move to Bottom");
-            this.BottomButton.UseVisualStyleBackColor = true;
-            this.BottomButton.Click += new System.EventHandler(this.BottomButton_Click);
-            // 
-            // DownButton
-            // 
-            this.DownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DownButton.Enabled = false;
-            this.DownButton.ImageIndex = 2;
-            this.DownButton.ImageList = this.imageList32;
-            this.DownButton.Location = new System.Drawing.Point(439, 162);
-            this.DownButton.Name = "DownButton";
-            this.DownButton.Size = new System.Drawing.Size(38, 38);
-            this.DownButton.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.DownButton, "Move Down");
-            this.DownButton.UseVisualStyleBackColor = true;
-            this.DownButton.Click += new System.EventHandler(this.DownButton_Click);
-            // 
-            // UpButton
-            // 
-            this.UpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.UpButton.Enabled = false;
-            this.UpButton.ImageIndex = 5;
-            this.UpButton.ImageList = this.imageList32;
-            this.UpButton.Location = new System.Drawing.Point(439, 102);
-            this.UpButton.Name = "UpButton";
-            this.UpButton.Size = new System.Drawing.Size(38, 38);
-            this.UpButton.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.UpButton, "Move Up");
-            this.UpButton.UseVisualStyleBackColor = true;
-            this.UpButton.Click += new System.EventHandler(this.UpButton_Click);
-            // 
-            // TopButton
-            // 
-            this.TopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TopButton.Enabled = false;
-            this.TopButton.ImageIndex = 4;
-            this.TopButton.ImageList = this.imageList32;
-            this.TopButton.Location = new System.Drawing.Point(439, 60);
-            this.TopButton.Name = "TopButton";
-            this.TopButton.Size = new System.Drawing.Size(38, 36);
-            this.TopButton.TabIndex = 4;
-            this.toolTip1.SetToolTip(this.TopButton, "Move to Top");
-            this.TopButton.UseVisualStyleBackColor = true;
-            this.TopButton.Click += new System.EventHandler(this.TopButton_Click);
-            // 
-            // CopyValueButton
-            // 
-            this.CopyValueButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyValueButton.Image = global::EEdit.Properties.Resources.CopyToClipboard;
-            this.CopyValueButton.Location = new System.Drawing.Point(439, 3);
-            this.CopyValueButton.Name = "CopyValueButton";
-            this.CopyValueButton.Size = new System.Drawing.Size(38, 36);
-            this.CopyValueButton.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.CopyValueButton, "Copy to Clipboard");
-            this.CopyValueButton.UseVisualStyleBackColor = true;
-            this.CopyValueButton.Click += new System.EventHandler(this.CopyValueButton_Click);
-            // 
-            // ValueDisplay
-            // 
-            this.ValueDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ValueDisplay.Location = new System.Drawing.Point(2, 3);
-            this.ValueDisplay.Name = "ValueDisplay";
-            this.ValueDisplay.ReadOnly = true;
-            this.ValueDisplay.Size = new System.Drawing.Size(430, 20);
-            this.ValueDisplay.TabIndex = 2;
-            this.ValueDisplay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ValueDisplay_KeyDown);
-            this.ValueDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ValueDisplay_MouseDown);
-            // 
-            // EntryList
-            // 
-            this.EntryList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.EntryList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader2});
-            this.EntryList.FullRowSelect = true;
-            this.EntryList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.EntryList.HideSelection = false;
-            this.EntryList.LabelEdit = true;
-            this.EntryList.LabelWrap = false;
-            this.EntryList.Location = new System.Drawing.Point(3, 29);
-            this.EntryList.MultiSelect = false;
-            this.EntryList.Name = "EntryList";
-            this.EntryList.Size = new System.Drawing.Size(430, 381);
-            this.EntryList.TabIndex = 1;
-            this.EntryList.UseCompatibleStateImageBehavior = false;
-            this.EntryList.View = System.Windows.Forms.View.Details;
-            this.EntryList.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.EntryList_AfterLabelEdit);
-            this.EntryList.SelectedIndexChanged += new System.EventHandler(this.EntryList_SelectedIndexChanged);
-            this.EntryList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EntryList_KeyDown);
-            this.EntryList.Resize += new System.EventHandler(this.List_SizeChanged);
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Width = 303;
-            // 
-            // ExportButton
-            // 
-            this.ExportButton.ImageKey = "SaveToFile.ico";
-            this.ExportButton.ImageList = this.imageList32;
-            this.ExportButton.Location = new System.Drawing.Point(51, 3);
-            this.ExportButton.Name = "ExportButton";
-            this.ExportButton.Size = new System.Drawing.Size(42, 39);
-            this.ExportButton.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.ExportButton, "Export to File");
-            this.ExportButton.UseVisualStyleBackColor = true;
-            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
-            // 
-            // ResetButton
-            // 
-            this.ResetButton.ImageKey = "Restore.ico";
-            this.ResetButton.ImageList = this.imageList32;
-            this.ResetButton.Location = new System.Drawing.Point(99, 3);
-            this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(42, 39);
-            this.ResetButton.TabIndex = 7;
-            this.toolTip1.SetToolTip(this.ResetButton, "Reset to Initial State");
-            this.ResetButton.UseVisualStyleBackColor = true;
-            this.ResetButton.Click += new System.EventHandler(this.Reset_Click);
+            this.valueEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.valueEditor1.EnvironmentVariable = null;
+            this.valueEditor1.Location = new System.Drawing.Point(0, 0);
+            this.valueEditor1.Name = "valueEditor1";
+            this.valueEditor1.Size = new System.Drawing.Size(480, 413);
+            this.valueEditor1.TabIndex = 0;
             // 
             // imageList16
             // 
@@ -346,6 +179,30 @@
             this.imageList16.Images.SetKeyName(7, "Add.ico");
             this.imageList16.Images.SetKeyName(8, "Restore.ico");
             this.imageList16.Images.SetKeyName(9, "SaveToFile.ico");
+            // 
+            // ResetButton
+            // 
+            this.ResetButton.ImageKey = "Restore.ico";
+            this.ResetButton.ImageList = this.imageList32;
+            this.ResetButton.Location = new System.Drawing.Point(99, 3);
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(42, 39);
+            this.ResetButton.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.ResetButton, "Reset to Initial State");
+            this.ResetButton.UseVisualStyleBackColor = true;
+            this.ResetButton.Click += new System.EventHandler(this.Reset_Click);
+            // 
+            // ExportButton
+            // 
+            this.ExportButton.ImageKey = "SaveToFile.ico";
+            this.ExportButton.ImageList = this.imageList32;
+            this.ExportButton.Location = new System.Drawing.Point(51, 3);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(42, 39);
+            this.ExportButton.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.ExportButton, "Export to File");
+            this.ExportButton.UseVisualStyleBackColor = true;
+            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
             // 
             // SaveButton
             // 
@@ -372,7 +229,6 @@
             this.Size = new System.Drawing.Size(722, 461);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -384,15 +240,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ListView VarList;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Button BottomButton;
-        private System.Windows.Forms.Button DownButton;
-        private System.Windows.Forms.Button UpButton;
-        private System.Windows.Forms.Button TopButton;
-        private System.Windows.Forms.Button CopyValueButton;
-        private System.Windows.Forms.TextBox ValueDisplay;
-        private System.Windows.Forms.ListView EntryList;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.Button RemoveEntryButton;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button ExportButton;
         private System.Windows.Forms.Button ResetButton;
@@ -402,7 +249,7 @@
         private System.Windows.Forms.Button RemoveVarButton;
         private System.Windows.Forms.Button RestoreVarButton;
         private System.Windows.Forms.Button NewVarButton;
-        private System.Windows.Forms.Button AddEntryButton;
+        private ValueEditor valueEditor1;
 
     }
 }
